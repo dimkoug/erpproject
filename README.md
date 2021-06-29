@@ -1,1 +1,1 @@
-# erpproject
+# django erp project
