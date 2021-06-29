@@ -5,6 +5,7 @@ from .settings_base import *
 This file is used to create a local settings_local.py file for development
 '''
 
+SECRET_KEY = ''
 
 
 DEBUG = True

@@ -25,7 +25,7 @@ VIRTUAL_ENV_DIR = os.path.abspath(os.path.join(
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ry60=@!v03h)n5_d0%&#5n=5(m@k_@gq8uw-mzg%rxcg1(sf_2'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
