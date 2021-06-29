@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'mptt',
     'users',
+    'users.api',
     'core',
 ]
 
