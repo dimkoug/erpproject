@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_jwt.views import (
+    obtain_jwt_token, refresh_jwt_token,
+    verify_jwt_token
+)
 
 
 from .views import HomeView
@@ -28,6 +32,9 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('users/api/', include('users.api.routers')),
     path('api-token-auth/', api_views.obtain_auth_token, name='api-token'),
+    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-refresh/', refresh_jwt_token),
+    path('api-token-verify/', verify_jwt_token),
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
 ]
