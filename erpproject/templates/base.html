@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap5/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap5/bootstrap-icons/bootstrap-icons.css' %}">
+    <script src="{% static 'bootstrap5/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap5/js/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap5/js/bootstrap.min.js' %}"></script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
