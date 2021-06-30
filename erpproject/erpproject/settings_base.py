@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'users',
     'users.api',
     'core',
+    'dms',
 ]
 
 SITE_ID = 1

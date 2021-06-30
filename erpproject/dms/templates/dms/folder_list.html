@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load core %}
+{% block content %}
+<div class="container">
+  <div class="row py-2">
+    <div class="col">
+      <a href="{% get_url 'create' %}" class="btn btn-primary float-right js-load-form">Add</a>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col">
+      <table id="table" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Parent</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list  %}
+          <tr>
+            <td> <a href="{% get_url 'detail' object  %}">{{object.name}}</a></td>
+            <td> {% if object.parent %}<a href="{% get_url 'detail' object.parent  %}">{% endif %}{{object.parent|default_if_none:'---'}}{% if object.parent %}</a>{% endif %}</td>
+            <td>
+                <a href="{% get_url 'update' object  %}" class="btn btn-warning js-load-form">Update</a>
+                <a href="{% get_url 'delete' object %}" class="btn btn-danger js-load-form">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

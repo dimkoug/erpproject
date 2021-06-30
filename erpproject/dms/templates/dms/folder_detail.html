@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load core %}
+
+{% block content %}
+<div class="container">
+  <div class="row py-2">
+    <div class="col">
+      {{object}}
+    </div>
+  </div>
+  {% if object.files.all  %}
+  <div class="row py-2">
+    <div class="col">
+      {% for doc in object.files.all %}
+      <a href="{{doc.document.url}}">{{doc.document.name}}</a> - <a href="{% url 'dms:delete_file' object.pk doc.id %}">Remove file</a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  <div class="row py-2">
+    <div class="col">
+      <a href="{% get_url 'list' %}" class="btn btn-light">Back</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

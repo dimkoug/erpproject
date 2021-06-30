@@ -30,6 +30,7 @@ from rest_framework.authtoken import views as api_views
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('users/', include('users.urls')),
+    path('dms/', include('dms.urls')),
     path('users/api/', include('users.api.routers')),
     path('api-token-auth/', api_views.obtain_auth_token, name='api-token'),
     path('api-token-auth/', obtain_jwt_token),
