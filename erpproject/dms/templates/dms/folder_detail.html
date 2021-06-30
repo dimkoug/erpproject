@@ -11,9 +11,23 @@
   {% if object.files.all  %}
   <div class="row py-2">
     <div class="col">
-      {% for doc in object.files.all %}
-      <a href="{{doc.document.url}}">{{doc.document.name}}</a> - <a href="{% url 'dms:delete_file' object.pk doc.id %}">Remove file</a>
-      {% endfor %}
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for doc in object.files.all %}
+            <tr>
+              <td><a href="{{doc.document.url}}">{{doc.document.name}}</a></td>
+              <td><a href="{% url 'dms:delete_file' object.pk doc.id %}" class="btn btn-danger">Remove file</a></td>
+            </tr>
+             {% endfor %}
+          </tbody>
+      </table>
+
     </div>
   </div>
   {% endif %}
