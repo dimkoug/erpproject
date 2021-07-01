@@ -4,6 +4,11 @@
 <div class="container">
   <div class="row py-2">
     <div class="col">
+      {% include 'alerts.html' %}
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col">
       <a href="{% get_url 'create' %}" class="btn btn-primary float-right js-load-form">Add</a>
     </div>
   </div>
@@ -23,8 +28,9 @@
             <td> <a href="{% get_url 'detail' object  %}">{{object.name}}</a></td>
             <td> {% if object.parent %}<a href="{% get_url 'detail' object.parent  %}">{% endif %}{{object.parent|default_if_none:'---'}}{% if object.parent %}</a>{% endif %}</td>
             <td>
-                <a href="{% get_url 'update' object  %}" class="btn btn-warning js-load-form">Update</a>
-                <a href="{% get_url 'delete' object %}" class="btn btn-danger js-load-form">Delete</a>
+                <a href="{% get_url 'update' object  %}" class="js-load-form"><i class="bi bi-pencil-square text-warning" style="font-size: 2rem;"></i></a>
+                <a href="{% get_url 'delete' object %}" class="js-load-form"><i class="bi bi-x text-danger" style="font-size: 2rem;"></i></a>
+                <a href="{% url 'dms:folder-create' %}?folder={{object.id}}"><i class="bi bi-folder-plus text-primary" style="font-size: 2rem;"></i></a>
             </td>
           </tr>
           {% endfor %}

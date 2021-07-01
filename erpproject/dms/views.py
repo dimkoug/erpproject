@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.http import Http404
 from django.shortcuts import redirect
 from django.contrib import messages
 
@@ -31,10 +32,23 @@ class FolderListView(LoginRequiredMixin, CoreListView):
 class FolderDetailView(LoginRequiredMixin, CoreDetailView):
     model = Folder
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != request.user:
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)
+
 
 class FolderCreateView(LoginRequiredMixin, CoreCreateView):
     model = Folder
     form_class = FolderForm
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial.update({
+            'parent': self.request.GET.get('folder')
+        })
+        return initial
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -64,6 +78,12 @@ class FolderUpdateView(LoginRequiredMixin, CoreUpdateView):
     model = Folder
     form_class = FolderForm
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != request.user:
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         obj = form.save()
         model_name = self.model.__name__.lower()
@@ -89,8 +109,19 @@ class FolderUpdateView(LoginRequiredMixin, CoreUpdateView):
 class FolderDeleteView(LoginRequiredMixin, CoreDeleteView):
     model = Folder
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != request.user:
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)
+
 
 def delete_file(request, folder, document):
-    FolderDocument.objects.filter(
-        folder_id=folder, document_id=document).delete()
+    folder = Folder.objects.get(id=folder)
+    if folder.user == request.user:
+        FolderDocument.objects.filter(
+            folder_id=folder, document_id=document).delete()
+        messages.success(
+            request, 'Your file deleted successfully!')
     return redirect("dms:index")
+    

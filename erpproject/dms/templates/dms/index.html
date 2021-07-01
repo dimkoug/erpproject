@@ -5,6 +5,11 @@
 <div class="container">
   <div class="row py-2">
     <div class="col">
+      {% include 'alerts.html' %}
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col">
       <a href="{% url 'dms:folder-list' %}">Folders</a>
     </div>
   </div>
