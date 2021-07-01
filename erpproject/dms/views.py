@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -12,7 +13,7 @@ from core.views import (
 )
 
 
-from .forms import FolderForm
+from .forms import FolderForm, FilesForm
 from .models import Document, Folder, FolderDocument
 
 
@@ -124,4 +125,21 @@ def delete_file(request, folder, document):
         messages.success(
             request, 'Your file deleted successfully!')
     return redirect("dms:index")
-    
+
+
+def add_files(request, folder):
+    context = {}
+    template = 'dms/add_files.html'
+    folder = Folder.objects.get(id=folder)
+    form = FilesForm(request, folder)
+    context['form'] = form
+    if request.method == 'POST':
+        media = request.FILES.getlist('media')
+        if media:
+            for f in media:
+                doc = Document.objects.create(document=f)
+                folder.files.add(doc)
+        messages.success(
+            request, 'Your files added successfully!')
+        return redirect(reverse_lazy('dms:folder-list'))
+    return render(request, template, context)
