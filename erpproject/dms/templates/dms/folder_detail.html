@@ -15,7 +15,7 @@
   </div>
   <div class="row py-2">
     <div class="col">
-      <a href="{% get_url 'create' %}?folder={{object.id}}" class="btn btn-primary float-right js-load-form">Add</a>
+      <a href="{% get_url 'create' %}?folder={{object.id}}" class="btn btn-primary float-right js-load-form">Add Folder</a>
     </div>
   </div>
     {% if object.children.all  %}
@@ -33,11 +33,12 @@
           {% for obj in object.children.all  %}
           <tr>
             <td> <a href="{% get_url 'detail' obj  %}">{{obj.name}}</a></td>
-            <td> {% if object.parent %}<a href="{% get_url 'detail' obj.parent  %}">{% endif %}{{obj.parent|default_if_none:'---'}}{% if obj.parent %}</a>{% endif %}</td>
+            <td> {% if obj.parent %}<a href="{% get_url 'detail' obj.parent  %}">{% endif %}{{obj.parent|default_if_none:'---'}}{% if obj.parent %}</a>{% endif %}</td>
             <td>
-              <a href="{% get_url 'update' obj  %}" class="js-load-form"><i class="bi bi-pencil-square text-warning" style="font-size: 2rem;"></i></a>
-              <a href="{% get_url 'delete' obj %}" class="js-load-form"><i class="bi bi-x text-danger" style="font-size: 2rem;"></i></a>
-              <a href="{% url 'dms:folder-create' %}?folder={{obj.id}}"><i class="bi bi-folder-plus text-primary" style="font-size: 2rem;"></i></a>
+              <a href="{% get_url 'update' obj  %}" class="js-load-form btn btn-warning"><i class="bi bi-pencil-square" style="font-size: 1rem;"></i></a>
+              <a href="{% get_url 'delete' obj %}" class="js-load-form btn btn-danger"><i class="bi bi-x" style="font-size: 1rem;"></i></a>
+              <a href="{% url 'dms:folder-create' %}?folder={{obj.id}}" class="btn btn-primary"><i class="bi bi-folder-plus" style="font-size: 1rem;"></i></a>
+              <a href="{% url 'dms:add_files' obj.id %}" class="btn btn-primary">Add files</a>
             </td>
           </tr>
           {% endfor %}
@@ -46,6 +47,11 @@
     </div>
   </div>
   {% endif %}
+  <div class="row py-2">
+    <div class="col">
+      <a href="{% url 'dms:add_files' object.id %}" class="btn btn-primary float-right js-load-form">Add Files</a>
+    </div>
+  </div>
   {% if object.files.all  %}
   <div class="row py-2">
     <div class="col">
