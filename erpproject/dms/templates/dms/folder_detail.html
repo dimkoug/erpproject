@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load core %}
-
+{% load dms %}
 {% block content %}
 <div class="container">
   <div class="row py-2">
@@ -26,6 +26,7 @@
           <tr>
             <th>Name</th>
             <th>Parent</th>
+            <th>Protocol</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -34,6 +35,15 @@
           <tr>
             <td> <a href="{% get_url 'detail' obj  %}">{{obj.name}}</a></td>
             <td> {% if obj.parent %}<a href="{% get_url 'detail' obj.parent  %}">{% endif %}{{obj.parent|default_if_none:'---'}}{% if obj.parent %}</a>{% endif %}</td>
+            <td>
+              {% get_protocol obj as protocol %}
+              {% if protocol.url_link %}
+                <a href="{{protocol.url_link}}">Add protocol</a>
+              {% else %}
+                {{protocol.protocol}}
+              {% endif %}
+
+            </td>
             <td>
               <a href="{% get_url 'update' obj  %}" class="js-load-form btn btn-warning"><i class="bi bi-pencil-square" style="font-size: 1rem;"></i></a>
               <a href="{% get_url 'delete' obj %}" class="js-load-form btn btn-danger"><i class="bi bi-x" style="font-size: 1rem;"></i></a>
@@ -59,6 +69,7 @@
           <thead>
             <tr>
               <th>Document</th>
+              <th>Protocol</th>
               <th></th>
             </tr>
           </thead>
@@ -66,12 +77,19 @@
             {% for doc in object.files.all %}
             <tr>
               <td><a href="{{doc.document.url}}">{{doc.document.name}}</a></td>
+              <td>
+                {% get_protocol doc as protocol %}
+                {% if protocol.url_link %}
+                  <a href="{{protocol.url_link}}">Add protocol</a>
+                {% else %}
+                  {{protocol}}
+                {% endif %}
+              </td>
               <td><a href="{% url 'dms:delete_file' object.pk doc.id %}" class="btn btn-danger">Remove file</a></td>
             </tr>
              {% endfor %}
           </tbody>
       </table>
-
     </div>
   </div>
   {% endif %}

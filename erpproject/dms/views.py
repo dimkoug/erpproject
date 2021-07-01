@@ -14,7 +14,7 @@ from core.views import (
 
 
 from .forms import FolderForm, FilesForm
-from .models import Document, Folder, FolderDocument
+from .models import Document, Folder, FolderDocument, Protocol
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -143,3 +143,13 @@ def add_files(request, folder):
             request, 'Your files added successfully!')
         return redirect(reverse_lazy('dms:folder-list'))
     return render(request, template, context)
+
+
+def add_protocol(request, object_type, object_id):
+    Protocol.objects.create(
+        object_type=object_type,
+        object=object_id
+    )
+    messages.success(
+        request, 'Your protocol added successfully!')
+    return redirect(reverse_lazy('dms:folder-list'))

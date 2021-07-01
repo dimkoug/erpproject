@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load core %}
+{% load dms %}
 {% block content %}
 <div class="container">
   <div class="row py-2">
@@ -19,6 +20,7 @@
           <tr>
             <th>Name</th>
             <th>Parent</th>
+            <th>Protocol</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -27,6 +29,15 @@
           <tr>
             <td> <a href="{% get_url 'detail' object  %}">{{object.name}}</a></td>
             <td> {% if object.parent %}<a href="{% get_url 'detail' object.parent  %}">{% endif %}{{object.parent|default_if_none:'---'}}{% if object.parent %}</a>{% endif %}</td>
+            <td>
+              {% get_protocol object as protocol %}
+              {% if protocol.url_link %}
+                <a href="{{protocol.url_link}}">Add protocol</a>
+              {% else %}
+                {{protocol}}
+              {% endif %}
+
+            </td>
             <td>
                 <a href="{% get_url 'update' object  %}" class="js-load-form btn btn-warning"><i class="bi bi-pencil-square" style="font-size: 1rem;"></i></a>
                 <a href="{% get_url 'delete' object %}" class="js-load-form btn btn-danger"><i class="bi bi-x" style="font-size: 1rem;"></i></a>

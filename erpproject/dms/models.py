@@ -49,3 +49,18 @@ class FolderDocument(Timestamped):
         default_related_name = 'folderdocuments'
         verbose_name = 'folder document'
         verbose_name_plural = 'folder documents'
+
+
+class Protocol(Timestamped):
+    protocol = models.CharField(max_length=255, default=uuid.uuid4)
+    object_type = models.CharField(max_length=255)
+    object = models.PositiveIntegerField()
+
+    class Meta:
+        default_related_name = 'protocols'
+        verbose_name = 'protocol'
+        verbose_name_plural = 'protocols'
+        unique_together = (('object_type', 'object'),)
+
+    def __str__(self):
+        return f"{self.protocol}"
