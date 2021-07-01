@@ -22,7 +22,7 @@ class Document(Timestamped):
 
 
 class Folder(Timestamped, MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     files = models.ManyToManyField(Document, through='FolderDocument',
                                    blank=True)
@@ -49,6 +49,7 @@ class FolderDocument(Timestamped):
         default_related_name = 'folderdocuments'
         verbose_name = 'folder document'
         verbose_name_plural = 'folder documents'
+        unique_together = (('folder', 'document'),)
 
 
 class Protocol(Timestamped):
